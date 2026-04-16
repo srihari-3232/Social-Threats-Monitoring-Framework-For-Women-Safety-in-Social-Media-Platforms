@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentication | Social Threat Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+          font-family:"Poppins",sans-serif;
+          background:#020617;
+          color:#fff;
+          overflow:hidden;
+        }
+        #vanta-bg{
+          position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
+        }
+        .container{
+          max-width:420px;margin:auto;padding:70px 20px;text-align:center;
+        }
+        h1{
+          font-size:2.5rem;font-weight:700;color:#26a4ff;
+          text-shadow:0 0 14px rgba(38,164,255,.7);
+          margin-bottom:12px;
+        }
+        p.subtitle{font-size:.95rem;color:#cfd9ff;margin-bottom:25px}
+
+        .auth-card{
+          background:rgba(4,12,30,.85);
+          padding:25px;border-radius:18px;
+          backdrop-filter:blur(12px);
+          box-shadow:0 16px 40px rgba(0,0,0,.6);
+        }
+        .tabs{
+          display:flex;background:#092041;padding:5px;border-radius:999px;margin-bottom:18px
+        }
+        .tab-btn{
+          flex:1;padding:10px;border:none;
+          background:transparent;color:#9fbaff;
+          font-weight:500;border-radius:999px;cursor:pointer;
+          transition:.2s;
+        }
+        .tab-btn.active{
+          background:linear-gradient(135deg,#00b2ff,#0077ff);
+          color:#fff;box-shadow:0 0 10px rgba(0,153,255,.8)
+        }
+        .form-group{text-align:left;margin-bottom:14px}
+        label{font-size:.86rem;font-weight:500;margin-bottom:5px;display:block}
+        input{
+          width:100%;padding:11px;border-radius:8px;border:none;
+          background:#fff;font-size:.95rem;outline:none;
+        }
+
+        .submit-btn{
+          width:100%;padding:11px;margin-top:6px;
+          background:linear-gradient(135deg,#00b2ff,#0077ff);
+          border:none;border-radius:999px;color:#fff;
+          font-size:1rem;font-weight:600;cursor:pointer;
+          transition:.3s;box-shadow:0 0 12px rgba(0,153,255,.6);
+        }
+        .submit-btn:hover{transform:scale(1.04)}
+
+        .switch-text{margin-top:14px;font-size:.9rem}
+        .switch-text a{color:#4cc3ff;text-decoration:underline;cursor:pointer}
+        .hidden{display:none}
+
+        .back-home{margin-top:15px;font-size:.85rem}
+        .alert{
+          margin-top:10px;padding:8px;border-radius:6px;
+          font-size:.9rem;display:none;
+        }
+        .success{background:#0f5132;color:#daf9db}
+        .error{background:#842029;color:#f8d7da}
+    </style>
+</head>
+<body>
+<div id="vanta-bg"></div>
+
+<div class="container">
+    <h1>Welcome</h1>
+    <p class="subtitle">Login or Create an account to continue.</p>
+
+    <div class="auth-card">
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button id="loginTab" class="tab-btn active">Login</button>
+            <button id="signupTab" class="tab-btn">Sign Up</button>
+        </div>
+
+        <!-- ALERT MESSAGE -->
+        <div id="messageBox" class="alert"></div>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="login_email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login_password" required>
+            </div>
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <form id="signupForm" class="hidden">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" id="signup_name" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="signup_email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="signup_password" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+
+        <p class="back-home">
+            <a style="color:#7ec7ff" href="index.html">← Back to Home</a>
+        </p>
+    </div>
+</div>
+
+<!-- VANTA Background -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<script>
+    // VANTA INIT
+    VANTA.NET({
+      el:"#vanta-bg",mouseControls:true,touchControls:true,backgroundColor:0x020617,color:0x00aaff
+    });
+
+    // Tabs logic
+    const loginTab=document.getElementById("loginTab");
+    const signupTab=document.getElementById("signupTab");
+    const loginForm=document.getElementById("loginForm");
+    const signupForm=document.getElementById("signupForm");
+    const msg=document.getElementById("messageBox");
+
+    loginTab.onclick=()=>{loginTab.classList.add("active");signupTab.classList.remove("active");
+      loginForm.classList.remove("hidden");signupForm.classList.add("hidden");msg.style.display="none";};
+
+    signupTab.onclick=()=>{signupTab.classList.add("active");loginTab.classList.remove("active");
+      signupForm.classList.remove("hidden");loginForm.classList.add("hidden");msg.style.display="none";};
+
+    // Show message helper
+    function showMessage(text,type){
+      msg.textContent=text;
+      msg.className=`alert ${type}`;
+      msg.style.display="block";
+    }
+
+    // LOGIN REQUEST
+    loginForm.onsubmit=async(e)=>{
+      e.preventDefault();
+      let res=await fetch("http://127.0.0.1:5000/login",{
+        method:"POST",
+        body:new URLSearchParams({
+          email:login_email.value,
+          password:login_password.value
+        })
+      });
+      let data=await res.json();
+      if(data.success){
+        showMessage("Login Successful, Redirecting...","success");
+        // ✅ Go to your static dashboard page (NOT /dashboard API)
+        setTimeout(()=>window.location.href="dashboard.html",800);
+      } else showMessage(data.message,"error");
+    };
+
+    // SIGNUP REQUEST
+    signupForm.onsubmit=async(e)=>{
+      e.preventDefault();
+      let res=await fetch("http://127.0.0.1:5000/signup",{
+        method:"POST",
+        body:new URLSearchParams({
+          name:signup_name.value,
+          email:signup_email.value,
+          password:signup_password.value
+        })
+      });
+      let data=await res.json();
+      if(data.success){
+        showMessage("Signup successful, please login.","success");
+        loginTab.click();
+      } else showMessage(data.message,"error");
+    };
+</script>
+</body>
+</html>

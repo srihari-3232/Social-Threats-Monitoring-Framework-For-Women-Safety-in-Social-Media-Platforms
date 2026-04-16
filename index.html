@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Social Threat Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- INLINE CSS -->
+    <style>
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        body {
+          font-family: "Poppins", sans-serif;
+          color: #ffffff;
+          min-height: 100vh;
+          overflow: hidden;
+        }
+
+        #vanta-bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+        }
+
+        .container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 80px 20px;
+          text-align: center;
+        }
+
+        h1 {
+          font-size: 3rem;
+          font-weight: 700;
+          margin-bottom: 18px;
+          color: #26a4ff;
+          text-shadow: 0 0 18px rgba(38, 164, 255, 0.8);
+        }
+
+        p.subtitle {
+          font-size: 1.05rem;
+          max-width: 760px;
+          margin: 0 auto;
+          line-height: 1.6;
+          color: #e5eeff;
+        }
+
+        .auth-section {
+          margin-top: 40px;
+        }
+
+        .cta-btn {
+          background: linear-gradient(135deg, #00b2ff, #0077ff);
+          padding: 16px 52px;
+          border-radius: 999px;
+          border: none;
+          font-size: 1.25rem;
+          color: #ffffff;
+          font-weight: 600;
+          cursor: pointer;
+          transition: 0.25s ease-in-out;
+          box-shadow: 0 0 12px rgba(0, 153, 255, 0.5);
+          letter-spacing: 0.5px;
+          animation: glow 2s infinite alternate ease-in-out;
+        }
+
+        .cta-btn:hover {
+          transform: scale(1.07) translateY(-2px);
+        }
+
+        @keyframes glow {
+          0% { box-shadow: 0 0 10px rgba(0, 153, 255, 0.4); }
+          100% { box-shadow: 0 0 26px rgba(0, 153, 255, 1); }
+        }
+
+        .auth-options {
+          margin-top: 16px;
+          font-size: 0.98rem;
+          color: #cfd9ff;
+        }
+
+        .auth-options a {
+          color: #4cc3ff;
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        .auth-options a:hover {
+          color: #8ae3ff;
+        }
+
+        .threat-visualization {
+          margin-top: 40px;
+          height: 160px; /* just space for your future graph/3D */
+        }
+
+        @media (max-width: 600px) {
+          h1 {
+            font-size: 2.3rem;
+          }
+          .container {
+            padding-top: 60px;
+          }
+        }
+    </style>
+</head>
+<body>
+<div id="vanta-bg"></div>
+
+<div class="container">
+    <h1>Social Threat Detection</h1>
+    <p class="subtitle">
+        AI-driven protection against phishing and social engineering, with specialized detection for women's harassment –
+        identifying abusive DMs, revenge porn, and doxxing attempts in real-time.
+    </p>
+
+    <div class="auth-section">
+        <!-- MAIN BUTTON -->
+        <button class="cta-btn" onclick="window.location.href='auth.html'">
+            Get Started
+        </button>
+
+        <!-- SMALL LINKS -->
+        <p class="auth-options">
+            To continue, please <a onclick="window.location.href='auth.html'">Login</a> or
+            <a onclick="window.location.href='auth.html'">Sign Up</a>.
+        </p>
+    </div>
+
+    <div class="threat-visualization" id="threatViz"></div>
+</div>
+
+<!-- External libs for Vanta background -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<!-- INLINE JS -->
+<script>
+    // Initialize Vanta background
+    let vantaEffect;
+    window.addEventListener("load", function () {
+      vantaEffect = VANTA.NET({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0x00aaff,
+        backgroundColor: 0x020617,
+        points: 11.0,
+        maxDistance: 21.0,
+        spacing: 18.0
+      });
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Social Threat Detection</title>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="style.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div id="vanta-bg"></div>-->
+<!--    -->
+<!--    <div class="container">-->
+<!--        -->
+<!--        <h1>Social Threat Detection</h1>-->
+<!--        <p>AI-driven protection against phishing and social engineering, with specialized detection for women's harassment - identifying abusive DMs, revenge porn, and doxxing attempts in real-time.</p>-->
+<!--        -->
+<!--        <button class="btn" id="getStartedBtn">Let's Get Started</button>-->
+<!--        -->
+<!--        <div class="threat-visualization" id="threatViz"></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; JavaScript Libraries &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>-->
+<!--    -->
+<!--    &lt;!&ndash; Custom JavaScript &ndash;&gt;-->
+<!--    <script src="js/threejs-viz.js"></script>-->
+<!--    <script src="js/main.js"></script>-->
+<!--</body>-->
+<!--</html>-->

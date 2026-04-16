@@ -1,0 +1,245 @@
+/* css/platform.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    height: 100vh;
+    color: #fff;
+    background: linear-gradient(135deg, #021027, #0a3d6b);
+}
+
+#vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.platform-header {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.platform-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+}
+
+h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #1DA1F2, #0072ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(29, 161, 242, 0.3);
+}
+
+.search-container {
+    display: flex;
+    max-width: 700px;
+    width: 100%;
+    margin-bottom: 40px;
+    transition: all 0.5s ease;
+}
+
+.search-input {
+    flex: 1;
+    padding: 18px 25px;
+    border: none;
+    border-radius: 50px 0 0 50px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-right: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 20px rgba(29, 161, 242, 0.3);
+}
+
+.search-btn {
+    padding: 0 30px;
+    background: linear-gradient(135deg, #1DA1F2, #0072ff);
+    color: white;
+    border: none;
+    border-radius: 0 50px 50px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-left: none;
+}
+
+.search-btn:hover {
+    background: linear-gradient(135deg, #1a91da, #0066cc);
+}
+
+.results-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.results-box h2 {
+    margin-bottom: 25px;
+    color: #fff;
+    font-size: 1.8rem;
+}
+
+.tweets-container {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.tweet-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #ff4d4d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.tweet-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 77, 77, 0.3);
+}
+
+.tweet-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tweet-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.tweet-user {
+    font-weight: 600;
+    color: #fff;
+}
+
+.tweet-content {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.tweet-meta {
+    display: flex;
+    gap: 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+}
+
+.threat-visualization {
+    width: 100%;
+    height: 250px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.report-btn {
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #ff4d4d, #ff1a75);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 30px auto;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(255, 77, 77, 0.3);
+}
+
+.report-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 77, 77, 0.4);
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+}

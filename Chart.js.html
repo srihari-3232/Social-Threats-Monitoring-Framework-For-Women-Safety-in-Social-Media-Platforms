@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Threat Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="platform.css">
+    <style>
+        :root {
+            --primary-color: #FF0000;
+            --secondary-color: #E62117;
+            --accent-color: #B31212;
+        }
+        h1 {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        .search-btn, .report-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+        .tweet-card {
+            border-left-color: var(--primary-color);
+        }
+        /* Chart container styling */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="vanta-bg"></div>
+
+<div class="container">
+    <div class="platform-header">
+        <img src="assests/generated-image.png" alt="YouTube" class="platform-logo pulse">
+        <h1>Youtube Threat Analysis</h1>
+    </div>
+
+    <div class="search-container floating">
+        <input type="text" id="searchInput" placeholder="Enter keywords to analyze..." class="search-input">
+        <button id="searchBtn" class="search-btn">Analyze</button>
+    </div>
+
+    <div id="resultsSection" style="display: none;">
+        <div class="threat-visualization" id="threatViz"></div>
+
+        <div class="results-box">
+            <h2>Detected Threats</h2>
+            <div class="tweets-container" id="tweetsContainer">
+                <!-- Threats will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="results-box">
+            <h2>Threat Confidence Distribution</h2>
+            <div class="chart-container">
+                <canvas id="confidenceChart"></canvas>
+            </div>
+        </div>
+
+        <button id="generateReportBtn" class="report-btn floating">
+            Generate Comprehensive Report
+        </button>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+<!-- Combined Chart.js + Platform.js Logic -->
+<script>
+    // Global chart variable
+    let confidenceChart = null;
+
+    // Function to update/create confidence chart
+    function updateConfidenceChart(detections) {
+        const ctx = document.getElementById('confidenceChart').getContext('2d');
+
+        if (!detections || detections.length === 0) {
+            if (confidenceChart) {
+                confidenceChart.destroy();
+                confidenceChart = null;
+            }
+            return;
+        }
+
+        // Prepare data for chart
+        const labels = detections.map((d, i) => {
+            const type = d.type === 'video' ? 'Video' : 'Comment';
+            return `${type} #${i + 1}`;
+        });
+
+        const scores = detections.map(d => (d.confidence || 0) * 100); // Convert to percentage
+
+      // Color coding based on confidence level (YOUTUBE + BLUE THEME)
+const backgroundColors = scores.map(score => {
+    if (score >= 80) return 'rgba(255, 0, 0, 0.7)';        // High - YouTube Red
+    if (score >= 50) return 'rgba(59, 130, 246, 0.7)';     // Medium - Blue
+    return 'rgba(96, 165, 250, 0.5)';                      // Low - Light Blue
+});
+
+const borderColors = scores.map(score => {
+    if (score >= 80) return 'rgba(255, 0, 0, 1)';          // High - YouTube Red
+    if (score >= 50) return 'rgba(59, 130, 246, 1)';       // Medium - Blue
+    return 'rgba(147, 197, 253, 1)';                       // Low - Light Blue
+});
+
+
+        // Update existing chart or create new one
+        if (confidenceChart) {
+            confidenceChart.data.labels = labels;
+            confidenceChart.data.datasets[0].data = scores;
+            confidenceChart.data.datasets[0].backgroundColor = backgroundColors;
+            confidenceChart.data.datasets[0].borderColor = borderColors;
+            confidenceChart.update();
+        } else {
+            confidenceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Confidence Score (%)',
+                        data: scores,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        borderRadius: 5,
+                        hoverBackgroundColor: 'rgba(255, 0, 0, 0.8)',
+                        hoverBorderColor: 'rgba(255, 0, 0, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#fff',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Confidence: ' + context.parsed.y.toFixed(2) + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    // Your existing platform.js code (modified to include chart update)
+    document.getElementById('searchBtn').addEventListener('click', async function() {
+        const query = document.getElementById('searchInput').value.trim();
+
+        if (!query) {
+            alert('Please enter search keywords');
+            return;
+        }
+
+        // Show loading state
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('tweetsContainer').innerHTML = '<p>Analyzing YouTube content...</p>';
+
+        try {
+            // Call your backend API
+            const response = await fetch(`${window.location.origin}/api/youtube/scan?query=${encodeURIComponent(query)}&limit=20`);
+            const data = await response.json();
+
+            if (data.success && data.data.detections) {
+                const detections = data.data.detections;
+
+                // Render threats in the container
+                renderThreats(detections);
+
+                // Update chart with confidence scores
+                updateConfidenceChart(detections);
+
+            } else {
+                document.getElementById('tweetsContainer').innerHTML = '<p>No threats detected.</p>';
+                updateConfidenceChart([]);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('tweetsContainer').innerHTML = '<p>Error fetching data. Please try again.</p>';
+            updateConfidenceChart([]);
+        }
+    });
+
+    // Function to render threats (adapt this to your existing renderThreats function)
+    function renderThreats(detections) {
+        const container = document.getElementById('tweetsContainer');
+        container.innerHTML = '';
+
+        detections.forEach((detection, index) => {
+            const card = document.createElement('div');
+            card.className = 'tweet-card';
+
+            const confidencePercent = (detection.confidence * 100).toFixed(1);
+            const threatLevel = confidencePercent >= 80 ? 'HIGH' : confidencePercent >= 50 ? 'MEDIUM' : 'LOW';
+
+            card.innerHTML = `
+                <div class="threat-header">
+                    <span class="threat-level ${threatLevel.toLowerCase()}">${threatLevel}</span>
+                    <span class="confidence">Confidence: ${confidencePercent}%</span>
+                </div>
+                <h3>${detection.title || 'Comment'}</h3>
+                <p>${detection.description || detection.comment_text || ''}</p>
+                <div class="threat-meta">
+                    <span>Type: ${detection.type}</span>
+                    <span>Category: ${detection.category}</span>
+                    ${detection.video_url ? `<a href="${detection.video_url}" target="_blank">View Source</a>` : ''}
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+</script>
+</body>
+</html>

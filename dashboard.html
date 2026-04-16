@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Threat Detection | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div id="vanta-bg"></div>
+
+    <div class="container">
+        <div class="disclaimer-box">
+            <h2 class="disclaimer-title">Terms & Conditions</h2>
+            <p class="disclaimer-text">
+                By using this service, you agree to our terms of service and privacy policy.
+                Our AI analyzes content to detect threats but cannot guarantee 100% accuracy.
+                We prioritize your privacy - no personal data is stored permanently.
+                You are responsible for complying with all applicable laws when using this tool.
+            </p>
+            <button class="agree-btn" id="agreeBtn" onclick="window.location.href='detection.html'">I Agree</button>
+
+        </div>
+
+        <div id="detectSection" style="display: none;">
+            <div class="threat-visualization" id="threatViz"></div>
+            <button class="detect-btn pulse" id="detectBtn">
+                Detect Threats
+            </button>
+
+            <div class="info-boxes">
+                <div class="info-box">
+                    <h3>Common Harassment Patterns</h3>
+                    <p>Our AI detects these frequent forms of harassment targeting women:</p>
+                    <ul>
+                        <li>Unsolicited explicit messages</li>
+                        <li>Body-shaming comments</li>
+                        <li>Stalking behavior patterns</li>
+                        <li>Threats of violence</li>
+                        <li>Discriminatory language</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Platform-Specific Risks</h3>
+                    <p>Different platforms present unique harassment challenges:</p>
+                    <ul>
+                        <li><strong>Instagram:</strong> Fake profiles, photo tagging abuse</li>
+                        <li><strong>Twitter:</strong> Coordinated harassment campaigns</li>
+                        <li><strong>Facebook:</strong> Fake accounts, private group targeting</li>
+                        <li><strong>Dating Apps:</strong> Unsolicited explicit content</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Protection Features</h3>
+                    <p>Our system provides these specialized protections:</p>
+                    <ul>
+                        <li>Real-time message scanning</li>
+                        <li>Profile authenticity scoring</li>
+                        <li>Threat level assessment</li>
+                        <li>Anonymous reporting tools</li>
+                        <li>Evidence preservation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="js/threat-viz.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

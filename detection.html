@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Detection Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="detection.css">
+</head>
+<body>
+    <div id="vanta-bg"></div>
+    
+    <div class="container">
+        <h1 class="pulse">Click Below.....</h1>
+        
+        <div class="social-platforms">
+            <div class="platform-card" data-platform="twitter">
+                <img src="assests/twitter-logo.jpeg" alt="Twitter">
+                <h3>Twitter</h3>
+                
+            </div>
+            
+            <div class="platform-card" data-platform="reddit">
+                <img src="assests/reddit-logo.jpeg" alt="Reddit">
+                <h3>Reddit</h3>
+                
+            </div>
+            
+            <div class="platform-card" data-platform="youtube">
+                <img src="assests/generated-image.png" alt="YouTube">
+                <h3>YouTube</h3>
+                
+            </div>
+            
+            <div class="platform-card" data-platform="newsapi">
+                <img src="assests/news.png" alt="NewsAPI">
+                <h3>NewsAPI</h3>
+
+            </div>
+
+            <div class="platform-card" data-platform="gnewsapi">
+                <a href="platform-gnewsapi.html">
+                    <img src="assests/gnews.jpeg" alt="GNewsAPI">
+                </a>
+                <h3>GNewsAPI</h3>
+
+            </div>
+        </div>
+        
+        <div class="threat-visualization" id="threatViz"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="js/detection.js"></script>
+</body>
+</html>
